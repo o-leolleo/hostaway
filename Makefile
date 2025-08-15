@@ -1,10 +1,7 @@
 .PHONY: init clean
 
 init:
-	minikube start
-	cd terraform \
-	&& terraform init \
-	&& terraform apply -auto-approve
+	./init.sh
 
 clean:
 	minikube delete --all
