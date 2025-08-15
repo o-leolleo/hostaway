@@ -24,18 +24,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Resolves Git SHA
-        id: resolved-sha
-        shell: bash
-        env:
-          RESOLVED_SHA: ${{ github.sha }}
-        run: |
-          echo "value=${RESOLVED_SHA::8}" >> "${GITHUB_OUTPUT}"
-
       - name: Retag the docker image
         shell: bash
         env:
-          FROM_TAG: ${{ steps.resolved-sha.outputs.value }}
+          FROM_TAG: latest
           TO_TAG: ${{ github.ref_name}}
         run: |
           docker pull "${IMAGE_NAME}:${FROM_TAG}"
