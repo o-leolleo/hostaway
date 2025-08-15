@@ -1,19 +1,21 @@
 namespace: staging
 
 resources:
-  - ../../base
+- ../../base
 
 images:
-  - name: hostaway
-    newName: ghcr.io/o-leolleo/hostaway
-    newTag: latest
+- name: hostaway
+  newName: ghcr.io/o-leolleo/hostaway
+  newTag: sha-3185dcda
 
 # Runs 2 replicas at least in production
 patches:
-  - target:
-      kind: HorizontalPodAutoscaler
-      name: hostaway
-    patch: |-
-      - op: replace
-        path: /spec/minReplicas
-        value: 2
+- patch: |-
+    - op: replace
+      path: /spec/minReplicas
+      value: 2
+  target:
+    kind: HorizontalPodAutoscaler
+    name: hostaway
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
