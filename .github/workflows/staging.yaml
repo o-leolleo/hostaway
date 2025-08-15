@@ -44,7 +44,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           context: workflow
-          images: o-leolleo/my-nginx-app
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=pr
             type=raw,prefix=sha-,value=${{steps.resolved-sha.outputs.value}},enable={{is_default_branch}},priority=300
