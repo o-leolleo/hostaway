@@ -17,7 +17,7 @@ spec:
     metadata:
       name: "{{index .path.segments 2}}-{{.path.basename}}"
     spec:
-      project: default
+      project: "{{.path.basename}}"
       syncPolicy:
         automated:
           prune: true
