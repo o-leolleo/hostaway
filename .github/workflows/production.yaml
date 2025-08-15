@@ -42,3 +42,14 @@ jobs:
           docker pull "${IMAGE_FQN}:${FROM_TAG}"
           docker tag "${IMAGE_FQN}:${FROM_TAG}" "${IMAGE_FQN}:${TO_TAG}"
           docker push "${IMAGE_FQN}:${TO_TAG}"
+
+  deploy:
+    uses: ./.github/workflows/deploy.yaml
+    permissions:
+      contents: write
+    with:
+      environment: prd
+      version: ${{ github.event_name != 'workflow_dispatch' && github.ref_name || inputs.tag }}
+    secrets: inherit
+    needs:
+      - retag-img
