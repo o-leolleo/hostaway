@@ -1,0 +1,3 @@
+resources:
+  - core-components-appset.yaml
+  - tenants-appset.yaml

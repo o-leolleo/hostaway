@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenants
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/o-leolleo/hostaway
+        revision: main
+        directories:
+          - path: gitops/tenants/*/overlays/stg
+          - path: gitops/tenants/*/overlays/prd
+  template:
+    metadata:
+      name: "{{index .path.segments 2}}"
+    spec:
+      project: "{{.path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 15
+          backoff:
+            duration: 15s
+            factor: 2
+            maxDuration: 5m
+      source:
+        repoURL: https://github.com/o-leolleo/hostaway
+        targetRevision: main
+        path: "{{.path.path}}"
+      destination:
+        name: in-cluster

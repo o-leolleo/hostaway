@@ -1,0 +1,9 @@
+namespace: production
+
+resources:
+  - ../../base
+
+images:
+  - name: hostaway
+    newName: ghcr.io/o-leolleo/hostaway
+    newTag: latest
