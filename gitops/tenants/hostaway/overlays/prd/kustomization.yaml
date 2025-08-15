@@ -15,7 +15,7 @@ patches:
     name: hostaway
   patch: |-
     - op: replace
-      path: /spec/ports/0/targetPort
+      path: /spec/ports/0/port
       value: 8090
 - patch: |-
     - op: replace
