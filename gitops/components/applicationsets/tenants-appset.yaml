@@ -33,4 +33,5 @@ spec:
         targetRevision: main
         path: "{{.path.path}}"
       destination:
-        name: in-cluster
+        server: https://kubernetes.default.svc
+        namespace: "{{if eq .path.basename \"stg\"}}staging{{else}}production{{end}}"
