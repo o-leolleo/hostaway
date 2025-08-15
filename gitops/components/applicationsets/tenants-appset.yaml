@@ -15,7 +15,7 @@ spec:
           - path: gitops/tenants/*/overlays/prd
   template:
     metadata:
-      name: "{{index .path.segments 2}}"
+      name: "{{index .path.segments 2}}-{{.path.basename}}"
     spec:
       project: "{{.path.basename}}"
       syncPolicy:
