@@ -3,3 +3,40 @@ server:
     type: LoadBalancer
     servicePortHttp: 20080
     servicePortHttps: 20443
+repoServer:
+  volumes:
+    - name: local-repo
+      hostPath:
+        path: /mnt/source
+        type: Directory
+    - name: git-config
+      configMap:
+        name: git-config
+  volumeMounts:
+    - name: local-repo
+      mountPath: /mnt/source
+    - name: git-config
+      mountPath: /etc/gitconfig
+      subPath: gitconfig
+config:
+  repositories:
+    source:
+      type: git
+      name: source
+      url: file:///mnt/source
+extraObjects:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: git-config
+      namespace: argocd
+    data:
+      gitconfig: |
+        [filter "lfs"]
+          clean = git-lfs clean -- %f
+          smudge = git-lfs smudge -- %f
+          process = git-lfs filter-process
+          required = true
+
+        [safe]
+          directory = *

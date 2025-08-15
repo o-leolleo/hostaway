@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/o-leolleo/hostaway
+      repoURL: file:///mnt/source
       revision: main
       directories:
       - path: gitops/core/*

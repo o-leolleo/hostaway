@@ -9,6 +9,7 @@ main() {
     # See more at https://minikube.sigs.k8s.io/docs/commands/status/
     if ! minikube status &>/dev/null; then
         minikube start
+        nohup minikube mount $PWD:/mnt/source &
     else
         echo "Minikube is already running."
     fi
@@ -25,6 +26,8 @@ main() {
 	echo "ArgoCD is running!"
     echo "Access http://localhost:20080"
     echo "Initial admin password: ${password}"
+
+    kustomize build gitops/bootstrap/overlays/default | kubectl apply -f -
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
