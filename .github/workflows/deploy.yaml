@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Install kustomize
+        working-directory: ./
+        shell: bash
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set image
+        uses: nick-fields/retry@v3
+        env:
+          VERSION: ${{ inputs.version }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          APP_NAME: hostaway
+          USERNAME: ${{ github.actor }}
+          MESSAGE: >
+            Staging deploy triggered by ${{ github.actor }}@${{ github.event.repository.html_url }}.
+        with:
+          timeout_seconds: 5
+          max_attempts: 3
+          command: |
+            cd "./gitops/tenants/hostaway/overlays/${ENVIRONMENT}"
+
+            kustomize edit set image "${APP_NAME}=*:${VERSION}"
+
+            if ! git diff --quiet HEAD || ! git diff --quiet HEAD origin ; then
+                echo 'Changes detected, committing and pushing...'
+                git config --local user.name 'github-actions[bot]'
+                git config --local user.email 'github-actions[bot]@users.noreply.github.com'
+                git add .
+                git status
+                git commit -m "${MESSAGE}"
+                git push
+            fi
