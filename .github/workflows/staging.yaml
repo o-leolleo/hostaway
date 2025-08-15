@@ -79,7 +79,6 @@ jobs:
       - build
     permissions:
       contents: write
-      pull-requests: write
     with:
       environment: stg
       version: ${{ needs.build.outputs.version }}
@@ -92,5 +91,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      issues: write
     with:
       environment: stg
