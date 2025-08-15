@@ -71,6 +71,8 @@ jobs:
 
   deploy:
     uses: ./.github/workflows/deploy.yaml
+    permissions:
+      contents: write
     with:
       environment: stg
       version: ${{ needs.build.outputs.version }}
