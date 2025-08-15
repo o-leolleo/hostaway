@@ -6,7 +6,8 @@ on:
       - main
     paths:
       - apps/**
-      - .github/workflows/**
+      - .github/workflows/*.yaml
+      - .github/workflows/*.yml
 
 env:
   REGISTRY: ghcr.io
