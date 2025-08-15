@@ -94,7 +94,7 @@ jobs:
           timeout_seconds: 5
           max_attempts: 3
           command: |
-            cd ./apps/hostaway/overlays/stg
+            cd ./gitops/tenants/hostaway/overlays/stg
 
             kustomize edit set image "${APP_NAME}=*:${VERSION}"
 
