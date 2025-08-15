@@ -6,13 +6,15 @@ resources:
 images:
 - name: hostaway
   newName: ghcr.io/o-leolleo/hostaway
-  newTag: sha-3185dcda
+  newTag: sha-1284274d
 
 patches:
-- target:
-    kind: Service
-    name: hostaway
-  patch: |-
+- patch: |-
     - op: replace
       path: /spec/ports/0/port
       value: 8080
+  target:
+    kind: Service
+    name: hostaway
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
