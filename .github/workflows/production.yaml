@@ -2,28 +2,34 @@ name: Production
 
 on:
   push:
-    tags:
-      - '*'
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to release'
-        required: true
-      from-tag:
-        description: 'Tag to release from'
-        default: 'latest'
+    branches:
+      - main
+    paths:
+      - version.txt
+      - CHANGELOG.md
+      - .release-please-manifest.json
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  release-please:
+    uses: ./.github/workflows/release-please.yaml
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      environment: prd
+
   retag-img:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
       id-token: write
+    needs:
+      - release-please
     steps:
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -35,10 +41,14 @@ jobs:
       - name: Retag the docker image
         shell: bash
         env:
-          FROM_TAG: ${{ inputs.from-tag || 'latest' }}
-          TO_TAG: ${{ github.event_name != 'workflow_dispatch' && github.ref_name || inputs.tag }}
+          FROM_TAG: latest
+          TO_TAG: ${{ needs.release-please.outputs.tag_name }}
           IMAGE_FQN: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         run: |
+          if [ -z "${TO_TAG}" ]; then
+            echo "No tag specified, exiting"
+            exit 1
+          fi
           docker pull "${IMAGE_FQN}:${FROM_TAG}"
           docker tag "${IMAGE_FQN}:${FROM_TAG}" "${IMAGE_FQN}:${TO_TAG}"
           docker push "${IMAGE_FQN}:${TO_TAG}"
@@ -47,9 +57,10 @@ jobs:
     uses: ./.github/workflows/deploy.yaml
     permissions:
       contents: write
-    with:
-      environment: prd
-      version: ${{ github.event_name != 'workflow_dispatch' && github.ref_name || inputs.tag }}
-    secrets: inherit
     needs:
       - retag-img
+      - release-please
+    with:
+      environment: prd
+      version: ${{ needs.release-please.outputs.tag_name }}
+    secrets: inherit

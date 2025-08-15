@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - apps/**
-      - .github/workflows/*.yaml
-      - .github/workflows/*.yml
+    paths-ignore:
+      # Release update
+      - version.txt
+      - CHANGELOG.md
+      - .release-please-manifest.json
+      # GitOps/Infra related
+      - gitops/**
+      - terraform/**
 
 env:
   REGISTRY: ghcr.io
@@ -71,11 +75,21 @@ jobs:
 
   deploy:
     uses: ./.github/workflows/deploy.yaml
+    needs:
+      - build
     permissions:
       contents: write
     with:
       environment: stg
       version: ${{ needs.build.outputs.version }}
     secrets: inherit
+
+  release-please:
+    uses: ./.github/workflows/release-please.yaml
     needs:
-      - build
+      - deploy
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      environment: stg

@@ -1,0 +1,39 @@
+name: Release please
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    outputs:
+      pr:
+        description: The pull request created by the action
+        value: ${{ jobs.release-please.outputs.pr }}
+      tag_name:
+        description: The tag name created by the action
+        value: ${{ jobs.release-please.outputs.tag_name }}
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      pr: ${{ steps.release.outputs.pr }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Release Please
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skip-github-release: ${{ inputs.environment == 'stg' }}
+          skip-github-pull-request: ${{ inputs.environment == 'prd' }}
+
+      - name: Debug release outputs
+        env:
+          OUTPUT: ${{ toJSON(steps.release.outputs) }}
+        run: |
+          echo 'Debug job'
