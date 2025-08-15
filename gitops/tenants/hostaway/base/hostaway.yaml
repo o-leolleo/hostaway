@@ -8,6 +8,7 @@ spec:
     app: hostaway
   ports:
     - port: 80
+      targetPort: 80
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
