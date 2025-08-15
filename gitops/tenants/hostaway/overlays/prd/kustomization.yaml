@@ -1,22 +1,22 @@
 namespace: production
 
 resources:
-  - ../../base
+- ../../base
 
 images:
-  - name: hostaway
-    newName: ghcr.io/o-leolleo/hostaway
-    newTag: latest
+- name: hostaway
+  newName: ghcr.io/o-leolleo/hostaway
+  newTag: v0.1.0
 
 # Runs 2 replicas at least in production
 patches:
-- target:
-    kind: Service
-    name: hostaway
-  patch: |-
+- patch: |-
     - op: replace
       path: /spec/ports/0/port
       value: 8090
+  target:
+    kind: Service
+    name: hostaway
 - patch: |-
     - op: replace
       path: /spec/minReplicas
