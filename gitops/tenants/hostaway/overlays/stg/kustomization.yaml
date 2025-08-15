@@ -6,7 +6,7 @@ resources:
 images:
 - name: hostaway
   newName: ghcr.io/o-leolleo/hostaway
-  newTag: sha-fed73f5a
+  newTag: sha-83075c36
 
 patches:
 - patch: |-
