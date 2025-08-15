@@ -29,7 +29,8 @@ jobs:
         env:
           FROM_TAG: latest
           TO_TAG: ${{ github.ref_name}}
+          IMAGE_FQN: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         run: |
-          docker pull "${IMAGE_NAME}:${FROM_TAG}"
-          docker tag "${IMAGE_NAME}:${FROM_TAG}" "${IMAGE_NAME}:${TO_TAG}"
-          docker push "${IMAGE_NAME}:${TO_TAG}"
+          docker pull "${IMAGE_FQN}:${FROM_TAG}"
+          docker tag "${IMAGE_FQN}:${FROM_TAG}" "${IMAGE_FQN}:${TO_TAG}"
+          docker push "${IMAGE_FQN}:${TO_TAG}"
