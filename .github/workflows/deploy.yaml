@@ -32,7 +32,7 @@ jobs:
           APP_NAME: hostaway
           USERNAME: ${{ github.actor }}
           MESSAGE: >
-            Staging deploy triggered by ${{ github.actor }}@${{ github.event.repository.html_url }}.
+            ${{ github.actor }} deployed hostaway to ${{ inputs.environment }} @ ref=${{ github.ref_name }}.
         with:
           timeout_seconds: 5
           max_attempts: 3
