@@ -4,6 +4,14 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release'
+        required: true
+      from-tag:
+        description: 'Tag to release from'
+        default: 'latest'
 
 env:
   REGISTRY: ghcr.io
@@ -27,8 +35,8 @@ jobs:
       - name: Retag the docker image
         shell: bash
         env:
-          FROM_TAG: latest
-          TO_TAG: ${{ github.ref_name}}
+          FROM_TAG: ${{ inputs.from-tag || 'latest' }}
+          TO_TAG: ${{ github.ref_name || inputs.tag }}
           IMAGE_FQN: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         run: |
           docker pull "${IMAGE_FQN}:${FROM_TAG}"
