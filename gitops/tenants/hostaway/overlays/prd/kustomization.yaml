@@ -10,6 +10,13 @@ images:
 
 # Runs 2 replicas at least in production
 patches:
+- target:
+    kind: Service
+    name: hostaway
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/targetPort
+      value: 8090
 - patch: |-
     - op: replace
       path: /spec/minReplicas

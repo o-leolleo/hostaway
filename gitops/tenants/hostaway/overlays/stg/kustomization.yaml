@@ -8,3 +8,11 @@ images:
   newName: ghcr.io/o-leolleo/hostaway
   newTag: sha-3185dcda
 
+patches:
+- target:
+    kind: Service
+    name: hostaway
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/targetPort
+      value: 8080

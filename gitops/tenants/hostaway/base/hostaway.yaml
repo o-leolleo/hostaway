@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: hostaway
 spec:
+  type: LoadBalancer
   selector:
     app: hostaway
   ports:
