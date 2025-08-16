@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := up
 
-.PHONY: setup-repo up init build-app clean
+.PHONY: up init build deploy clean
 
 
 up:
@@ -11,7 +11,14 @@ init:
 	pre-commit install
 
 build:
-	docker build -t hostaway ./apps/hostaway
+	docker build -t hostaway:$(version) ./apps/hostaway \
+	&& minikube cache add hostaway:$(version) \
+	&& minikube cache reload
+
+deploy: build
+	cd gitops/tenants/hostaway/overlays/$(env) \
+	&& kustomize edit set image "hostaway=hostaway:$(version)" \
+	&& git commit -am "Deploying hostaway:$(version) to $(env)"
 
 clean:
 	minikube delete --all
