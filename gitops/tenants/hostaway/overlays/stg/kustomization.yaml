@@ -11,7 +11,7 @@ patches:
 - patch: |-
     - op: replace
       path: /spec/ports/0/port
-      value: 8080
+      value: 8070
   target:
     kind: Service
     name: hostaway

@@ -20,7 +20,7 @@ show-infos:
     && echo "Prometheus:" \
     && echo "  url: http://localhost:9090" \
 	&& echo "Hostaway NGINX app:" \
-	&& echo "  url (stg): http://localhost:8080" \
+	&& echo "  url (stg): http://localhost:8070" \
 	&& echo "  url (prd): http://localhost:8090"
 
 
