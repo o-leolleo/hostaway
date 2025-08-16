@@ -3,13 +3,14 @@
 .PHONY: up init build deploy clean
 
 
-up:
+up: init
 	./up.sh
 
 init:
 	pre-commit install --hook-type commit-msg
 	pre-commit install
 
+version ?= latest
 build:
 	docker build -t hostaway:$(version) ./apps/hostaway \
 	&& minikube image load hostaway:$(version)

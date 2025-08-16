@@ -1,9 +1,24 @@
 # DevOps Engineer Task - Hostaway
 
-**All components must run locally—no hosted/cloud solutions.**
+This repository contains the code and instructions for the DevOps Engineer task for Hostaway.
+
+## Notes
+
+This took longer as initially I went straight to hosting things into GitHub and adding actions to create tags and promote images. Shamefully I've extended the "Do not use any managed/cloud services." to "Do not use any managed/cloud services. But GitHub ones."
+
+I've since backtracked on this approach and went finally to full-local setup. Life got simpler and more consistent.
 
 ## Setup instructions
-<!-- Setup instructions (including prerequisites). Should be a 1 command install and run. -->
+
+Pre-requisites:
+- [argocd cli](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (>= 3.1.0, previous versions should work)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
+- [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) (I'm using v1.12.2, previous version should work)
+- [make](https://www.gnu.org/software/make/) (Normally available in Linux or MacOS)
+- [pre-commit](https://pre-commit.com/#install)
+- [docker + docker desktop (or similar)](https://docs.docker.com/engine/install/)
+- [minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fbinary+download)
 
 ## How to use ArgoCD for deployments, promotions, and rollbacks
 <!-- 4. Demonstrate GitOps workflows with ArgoCD:

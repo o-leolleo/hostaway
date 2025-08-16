@@ -5,7 +5,7 @@ resources:
 
 images:
 - name: hostaway
-  newTag: test-2
+  newTag: latest
 
 patches:
 - patch: |-
