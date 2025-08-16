@@ -5,7 +5,8 @@ resources:
 
 images:
 - name: hostaway
-  newTag: v0.1.0
+  newName: hostaway
+  newTag: test
 
 # Runs 2 replicas at least in production
 patches:
