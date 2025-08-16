@@ -20,7 +20,7 @@ argocd-login:
 
 deploy: build argocd-login
 	cd gitops/tenants/hostaway/overlays/$(env) \
-	&& kustomize edit set image "hostaway=hostaway:$(version)" \
+	&& kustomize edit set image "hostaway=*:$(version)" \
 	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)" \
 	&& argocd app sync hostaway-$(env)
 
