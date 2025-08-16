@@ -18,7 +18,11 @@ show-infos:
     && echo "  username: admin" \
     && echo "  password: $${password}" \
     && echo "Prometheus:" \
-    && echo "  url: http://localhost:9090"
+    && echo "  url: http://localhost:9090" \
+	&& echo "Hostaway NGINX app:" \
+	&& echo "  url (stg): http://localhost:8080" \
+	&& echo "  url (prd): http://localhost:8090"
+
 
 init:
 	pre-commit install --hook-type commit-msg
