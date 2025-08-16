@@ -13,6 +13,8 @@ spec:
   template:
     metadata:
       name: '{{path.basename}}'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: "."
     spec:
       project: default
       syncPolicy:
