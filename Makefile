@@ -4,10 +4,10 @@
 
 
 up: init
-	./up.sh
 	$(MAKE) build version=latest
-	$(MAKE) deploy version=latest env=stg
-	$(MAKE) deploy version=latest env=prd
+	$(MAKE) deploy version=latest env=stg sync=off
+	$(MAKE) deploy version=latest env=prd sync=off
+	./up.sh
 
 init:
 	pre-commit install --hook-type commit-msg
@@ -25,7 +25,7 @@ deploy: build argocd-login
 	cd gitops/tenants/hostaway/overlays/$(env) \
 	&& kustomize edit set image "hostaway=*:$(version)" \
 	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)" \
-	&& argocd app sync hostaway-$(env)
+	&& ([ $$(sync) -ne 'off' ] && argocd app sync hostaway-$(env) || true)
 
 clean:
 	minikube delete --all
