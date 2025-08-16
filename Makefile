@@ -14,10 +14,15 @@ build:
 	docker build -t hostaway:$(version) ./apps/hostaway \
 	&& minikube image load hostaway:$(version)
 
-deploy: build
+argocd-login:
+	password=$$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode) \
+	&& argocd login localhost:20080 --skip-test-tls --insecure --username admin --password "$${password}"
+
+deploy: build argocd-login
 	cd gitops/tenants/hostaway/overlays/$(env) \
 	&& kustomize edit set image "hostaway=hostaway:$(version)" \
-	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)"
+	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)" \
+	&& argocd app sync hostaway-$(env)
 
 clean:
 	minikube delete --all
