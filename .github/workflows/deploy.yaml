@@ -41,12 +41,4 @@ jobs:
 
             kustomize edit set image "${APP_NAME}=*:${VERSION}"
 
-            if ! git diff --quiet HEAD || ! git diff --quiet HEAD origin ; then
-                echo 'Changes detected, committing and pushing...'
-                git config --local user.name 'github-actions[bot]'
-                git config --local user.email 'github-actions[bot]@users.noreply.github.com'
-                git add .
-                git status
-                git commit -m "${MESSAGE}"
-                git push
-            fi
+            echo "Stubbed deploy job, I'm not changing anything anymore from github :)"
