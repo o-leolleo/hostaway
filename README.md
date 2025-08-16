@@ -15,7 +15,7 @@ Pre-requisites:
 - [minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fbinary+download)
 
 With all the above installed, you should be able to run the below, to have a local env up & running.
-```
+```shell
 make
 # or
 make up
