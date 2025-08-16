@@ -60,5 +60,13 @@ spec:
               memory: "64Mi"
             limits:
               memory: "64Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
           ports:
             - containerPort: 80
