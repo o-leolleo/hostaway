@@ -62,7 +62,7 @@ make deploy env=prd version=v1.0.0
 ## Defined monitors and thresholds
 
 Monitoring is one of my _known-unknown_ areas, where I feel there is the most room for improvement. My approach here was to go through the metrics (and alerts) defined by default in the `kube-prometheus-stack` helm chart and picking the most important ones in my perspective.
-The full list of default alerts, installed by the helm chart, is available at `http://localhost:9090/alerts` after running this project. Most of the discussion below is either a quote or adaptation of the underlying docs provided in https://runbooks.prometheus-operator.dev/, for the mentioned alerts, its metrics, and thresholds.
+The full list of default alerts, installed by the helm chart, is available at http://localhost:9090/alerts after running this project. Most of the discussion below is either a quote or adaptation of the underlying docs provided in https://runbooks.prometheus-operator.dev/, for the mentioned alerts, its metrics, and thresholds.
 
 - Cluster related
   - KubeApiDown
