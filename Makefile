@@ -18,7 +18,7 @@ build:
 deploy: build
 	cd gitops/tenants/hostaway/overlays/$(env) \
 	&& kustomize edit set image "hostaway=hostaway:$(version)" \
-	&& git commit -am "Deploying hostaway:$(version) to $(env)"
+	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)"
 
 clean:
 	minikube delete --all
