@@ -27,9 +27,14 @@ make
 make up
 ```
 
-This setup runs ArgoCD under http://localhost:20080, and prometheus at http://localhost:9090. This is shown as the above command output, alongside the argocd credentials.
+This setup runs:
+- ArgoCD under http://localhost:20080
+- Prometheus at http://localhost:9090
+- Hostaway NGINX apps:
+  - stg: http://localhost:8070
+  - prd: http://localhost:8090
 
-What happens here?
+What is `make` doing?
 1. Minikube is started in case not running.
 2. Terraform apply is run in auto-approve mode, to create a few namespaces and to install the `argocd`, `metrics-server` and `kube-prometheus-stack` helm charts.
 3. Kustomize is used to bootstrap the argocd server configs (I'm following the GitOps directory structure discussed [here](https://developers.redhat.com/articles/2022/09/07/how-set-your-gitops-directory-structure))
