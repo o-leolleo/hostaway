@@ -16,6 +16,9 @@ spec:
   template:
     metadata:
       name: "{{index .path.segments 2}}-{{.path.basename}}"
+      annotations:
+        # Assumes only kustomize projects are being deployed
+        argocd.argoproj.io/manifest-generate-paths: ".;../../base;../../components"
     spec:
       project: "{{.path.basename}}"
       syncPolicy:
