@@ -1,6 +1,6 @@
 # DevOps Engineer Task - Hostaway
 
-This repository contains the code and instructions for the DevOps Engineer task for Hostaway.
+This repository contains the code and instructions for the [DevOps Engineer task for Hostaway](https://github.com/hostvasco/devops-task/tree/main).
 
 ## Setup instructions
 
