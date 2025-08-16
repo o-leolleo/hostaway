@@ -5,7 +5,7 @@ resources:
 
 images:
 - name: hostaway
-  newTag: sha-12346
+  newTag: latest
 
 patches:
 - patch: |-
