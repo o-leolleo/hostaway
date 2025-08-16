@@ -1,13 +1,24 @@
 .DEFAULT_GOAL := up
 
-.PHONY: up init build deploy clean
+.PHONY: up show-infos init build argocd-login deploy clean
 
+.SILENT: show-infos
 
 up: init
-	$(MAKE) build version=latest
-	$(MAKE) deploy version=latest env=stg sync=off
-	$(MAKE) deploy version=latest env=prd sync=off
 	./up.sh
+	$(MAKE) build version=latest
+	$(MAKE) show-infos
+
+show-infos:
+	password=$$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode) \
+    && echo -e "\n---" \
+	&& echo -e "All set:\n" \
+    && echo "Argocd:" \
+    && echo "  url: http://localhost:20080" \
+    && echo "  username: admin" \
+    && echo "  password: $${password}" \
+    && echo "Prometheus:" \
+    && echo "  url: http://localhost:9090"
 
 init:
 	pre-commit install --hook-type commit-msg
@@ -25,7 +36,7 @@ deploy: build argocd-login
 	cd gitops/tenants/hostaway/overlays/$(env) \
 	&& kustomize edit set image "hostaway=*:$(version)" \
 	&& git commit -am "chore: Deploying hostaway:$(version) to $(env)" \
-	&& ([ $$(sync) -ne 'off' ] && argocd app sync hostaway-$(env) || true)
+	&& argocd app sync hostaway-$(env)
 
 clean:
 	minikube delete --all

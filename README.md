@@ -4,9 +4,9 @@ This repository contains the code and instructions for the DevOps Engineer task 
 
 ## Notes
 
-This took longer as initially I went straight to hosting things into GitHub and adding actions to create tags and promote images. Shamefully I've extended the "Do not use any managed/cloud services." to "Do not use any managed/cloud services. But GitHub ones."
+This took longer as initially I went straight to hosting things into GitHub and adding actions to create tags and promote images. Shamefully I've extended the "Do not use any managed/cloud services." to "Do not use any managed/cloud services. But GitHub ones.". In case curious, the workflows are still available in this repo and should be working, although I've stubbed out the deploy jobs in order to not change the repository contents (I was doing circular commits updating the gitops files, just to illustrate, normally I'd host the gitops repo separately).
 
-I've since backtracked on this approach and went finally to full-local setup. Life got simpler and more consistent.
+I've since backtracked on this approach and went finally to full-local setup. Life's got simpler and more consistent.
 
 ## Setup instructions
 
@@ -20,10 +20,45 @@ Pre-requisites:
 - [docker + docker desktop (or similar)](https://docs.docker.com/engine/install/)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fbinary+download)
 
+With all the above installed, you should be able to run the below, to have a local env up & running.
+```
+make
+# or
+make up
+```
+
+This setup runs ArgoCD under http://localhost:20080, and prometheus at http://localhost:9090. This is shown as the above command output, alongside the argocd credentials.
+
+What happens here?
+1. Minikube is started in case not running.
+2. Terraform apply is run in auto-approve mode, to create a few namespaces and to install the `argocd`, `metrics-server` and `kube-prometheus-stack` helm charts.
+3. Kustomize is used to bootstrap the argocd server configs (I'm following the GitOps directory structure discussed [here](https://developers.redhat.com/articles/2022/09/07/how-set-your-gitops-directory-structure))
+4. A `hostaway:latest` image is built and made available to Minikube.
+5. The access infos are echoed out.
+
+Once you're done you can run `make clean` to tear down the minikube cluster (this assume you have only one cluster running, it'll delete all clusters in case you have more).
+
 ## How to use ArgoCD for deployments, promotions, and rollbacks
-<!-- 4. Demonstrate GitOps workflows with ArgoCD:
-  - Deploy a simple Nginx app with output "hello it's me"
-  - We should be able to deploy a new version to staging, promote it to production, rollback to any version. -->
+
+To deploy something via ArgoCD, in this setup, you add a new tenant to the [./gitops/tenants/](./gitops/tenants/) directory, following the existing structure. For the example kustomize application (`hostaway`), there is a base folder for common constructs, and an overlay folder for each environment, in our case `stg` and `prd` (staging and production, respectively).
+
+Each overlay is converted to an ArgoCD application via the [`tenants-appset.yaml`](./gitops/tenants/tenants-appset.yaml) Application Set. These are created via the bootstrap process discussed in the previous section.
+
+Promoting a version of the app to any env is a matter of having the appropriate container image (and tag) created and available to the cluster, and editing the overlay `kustomization.yaml` file `images` property accordingly. This is often automated by calling the kustomize command like `kustomize edit set image "hostaway=*:<version>"`.
+After this change to the kustomization file is committed to the git (local) repository, ArgoCD will detect the change ([default sync pool of 180s](https://argo-cd.readthedocs.io/en/stable/faq/#how-often-does-argo-cd-check-for-changes-to-my-git-or-helm-repository)) and apply it automatically, or you can trigger a sync manually via the ArgoCD UI or CLI. When using git hosts like GitHub or GitLab this sync trigger is often performed via [ArgoCD webhook call](https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/).
+
+These commits to the right overlays kustomization files can be done in a fashion such that an image built and deployed to staging is later re-tagged with a SemVer which is then reflected in the prd overlay kustomization file (via regular commit).
+
+A rollback to a previous version is again just a matter of editing the image tag in the kustomization files, via any commit (normally a revert), which can be done via an automated pipelines or just editing the right files and pushing to the remote repository.
+
+I've added some make command to simulate this process, although here I'm not promoting images by relabeling but rather building them:
+
+```shell
+# this will build a new image and update the stg (staging) kustomization files accordingly
+make deploy env=stg version=sha-12345
+# this will do the same, but for production (prd overlay)
+make deploy env=prd version=v1.0.0
+```
 
 ## Defined monitors and thresholds
 
