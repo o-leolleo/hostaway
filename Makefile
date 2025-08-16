@@ -5,12 +5,14 @@
 
 up: init
 	./up.sh
+	$(MAKE) build version=latest
+	$(MAKE) deploy version=latest env=stg
+	$(MAKE) deploy version=latest env=prd
 
 init:
 	pre-commit install --hook-type commit-msg
 	pre-commit install
 
-version ?= latest
 build:
 	docker build -t hostaway:$(version) ./apps/hostaway \
 	&& minikube image load hostaway:$(version)
