@@ -44,3 +44,5 @@ deploy: build argocd-login
 
 clean:
 	minikube delete --all
+	killall minikube tunnel || true
+	killall minikube mount || true

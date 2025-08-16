@@ -41,7 +41,7 @@ Once you're done you can run `make clean` to tear down the minikube cluster (thi
 
 To deploy something via ArgoCD, in this setup, you add a new tenant to the [./gitops/tenants/](./gitops/tenants/) directory, following the existing structure. For the example kustomize application (`hostaway`), there is a base folder for common constructs, and an overlay folder for each environment, in our case `stg` and `prd` (staging and production, respectively).
 
-Each overlay is converted to an ArgoCD application via the [`tenants-appset.yaml`](./gitops/tenants/tenants-appset.yaml) Application Set. These are created via the bootstrap process discussed in the previous section.
+Each overlay is converted to an ArgoCD application via the [`tenants-appset.yaml`](./gitops/components/applicationsets/tenants-appset.yaml) Application Set. These are created via the bootstrap process discussed in the previous section.
 
 Promoting a version of the app to any env is a matter of having the appropriate container image (and tag) created and available to the cluster, and editing the overlay `kustomization.yaml` file `images` property accordingly. This is often automated by calling the kustomize command like `kustomize edit set image "hostaway=*:<version>"`.
 After this change to the kustomization file is committed to the git (local) repository, ArgoCD will detect the change ([default sync pool of 180s](https://argo-cd.readthedocs.io/en/stable/faq/#how-often-does-argo-cd-check-for-changes-to-my-git-or-helm-repository)) and apply it automatically, or you can trigger a sync manually via the ArgoCD UI or CLI. When using git hosts like GitHub or GitLab this sync trigger is often performed via [ArgoCD webhook call](https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/).
