@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.2.0](https://github.com/o-leolleo/hostaway/compare/v0.1.0...v0.2.0) (2025-08-16)
+
+
+### Features
+
+* Adds manifest-generate-paths to core apps ([3adf9c6](https://github.com/o-leolleo/hostaway/commit/3adf9c63350bf1c21894f85536ad2b6aa1f544ae))
+* Adds manifest-generate-paths to tenant apps ([fa15ff6](https://github.com/o-leolleo/hostaway/commit/fa15ff61b9442e61dbd34d9ac45693a967b6c237))
+* Improves discussions, avoids argo sec warning ([2e1f172](https://github.com/o-leolleo/hostaway/commit/2e1f1727f29a731c70b7cf070205ca1e83abb30a))
+* Keeps latest as the initial images state ([c37eaf3](https://github.com/o-leolleo/hostaway/commit/c37eaf36bea8e8d2af5855d7805b6034167dc6f5))
+* Simplifies things up by handling everything locally ([348d71b](https://github.com/o-leolleo/hostaway/commit/348d71b3b67cb079059fc91e2393ec53f00d2497))
+* Updates stg port ([2d9b83b](https://github.com/o-leolleo/hostaway/commit/2d9b83b81c4f59dd980e8501827b3519d6e09edd))
+* Uses latest in stg ([11db660](https://github.com/o-leolleo/hostaway/commit/11db660b9b98078aa579055276e0546a35440ed5))
+
+
+### Bug Fixes
+
+* Target of local repo from app sets ([81cc6cb](https://github.com/o-leolleo/hostaway/commit/81cc6cb49927a8cc5a10fc6b04d322ba661ddaaf))
+
+
+### Miscellaneous
+
+* Adds sample commands to examplify argo workflow ([54319da](https://github.com/o-leolleo/hostaway/commit/54319da9d56c044d2864660625b647d3d504aa13))
+* Clean up tunnel and fix readme link ([936b8de](https://github.com/o-leolleo/hostaway/commit/936b8de19a5b1a416ab69e4a0884edaf73fc5fab))
+* Deploying hostaway:latest to prd ([aeecc3f](https://github.com/o-leolleo/hostaway/commit/aeecc3f6717f36997c32cb3110b837fe199bdc16))
+* Deploying hostaway:latest to stg ([b6a98a0](https://github.com/o-leolleo/hostaway/commit/b6a98a04acd4025957b28f17139c592be0ec2c11))
+* Deploying hostaway:latest to stg ([31f43ad](https://github.com/o-leolleo/hostaway/commit/31f43ad2eb8e91fd5607ada37b4283ce796ef349))
+* Deploying hostaway:latest to stg ([8c3d980](https://github.com/o-leolleo/hostaway/commit/8c3d980ba0300cbedbf5c1a78608a79f8fafffc7))
+* Deploying hostaway:sha-12345 to stg ([62298be](https://github.com/o-leolleo/hostaway/commit/62298bebb77a67b51d2664f2eaac5d2932ec7dd3))
+* Deploying hostaway:sha-12345 to stg ([54ff4c9](https://github.com/o-leolleo/hostaway/commit/54ff4c9a292ec3499e2a2f4efb297e666a9641bf))
+* Deploying hostaway:sha-12345 to stg ([00171d5](https://github.com/o-leolleo/hostaway/commit/00171d50ffd43133c352b0cb3a21c821eb8ace9b))
+* Deploying hostaway:sha-12345 to stg ([5af0748](https://github.com/o-leolleo/hostaway/commit/5af0748f37b6ef64d34ec190dbef1c41d6ec8fa6))
+* Deploying hostaway:sha-12346 to stg ([ff6f61f](https://github.com/o-leolleo/hostaway/commit/ff6f61f7fb4ea33282129abab6726cd678b59e92))
+* Deploying hostaway:test to prd ([af9040f](https://github.com/o-leolleo/hostaway/commit/af9040f732b224cf4071bb61dc92d40a91f78360))
+* Deploying hostaway:test to stg ([a82b1e8](https://github.com/o-leolleo/hostaway/commit/a82b1e85703d67f057597f6b2adccac5f5407657))
+* Deploying hostaway:test-2 to stg ([5065413](https://github.com/o-leolleo/hostaway/commit/50654135aa842bb05eb7ae4d65111b6ee6500b70))
+* Deploying hostaway:test3 to prd ([293baea](https://github.com/o-leolleo/hostaway/commit/293baeaaeb73f30004ea39c80703eb3bae611ec0))
+* Deploying hostaway:test4 to prd ([1c52b55](https://github.com/o-leolleo/hostaway/commit/1c52b555e85bd93e53d2ef1acc42eff83b8464dc))
+* Deploying hostaway:v1.0.0 to prd ([35a927f](https://github.com/o-leolleo/hostaway/commit/35a927f832b953c6278c7638ba58e5feb03a019f))
+* Stubs out deploy job now that everything is local ([9c2b294](https://github.com/o-leolleo/hostaway/commit/9c2b29432e48f33ac3aa1f309a95628d8c7636a4))
+
 ## [0.1.0](https://github.com/o-leolleo/hostaway/compare/v0.0.2...v0.1.0) (2025-08-15)
 
 
