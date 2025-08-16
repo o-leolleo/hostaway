@@ -2,12 +2,6 @@
 
 This repository contains the code and instructions for the DevOps Engineer task for Hostaway.
 
-## Notes
-
-This took longer as initially I went straight to hosting things into GitHub and adding actions to create tags and promote images. Shamefully I've extended the "Do not use any managed/cloud services." to "Do not use any managed/cloud services. But GitHub ones.". In case curious, the workflows are still available in this repo and should be working, although I've stubbed out the deploy jobs in order to not change the repository contents (I was doing circular commits updating the gitops files, just to illustrate, normally I'd host the gitops repo separately).
-
-I've since backtracked on this approach and went finally to full-local setup. Life's got simpler and more consistent.
-
 ## Setup instructions
 
 Pre-requisites:
@@ -124,3 +118,9 @@ The full list of default alerts, installed by the helm chart, is available at `h
   - KubeJobNotCompleted
     - **Threshold**: More than one job not completed in the last 1 hour.
     - **Why it’s important**: Can indicate long running jobs or issues with scheduling the next one.
+
+## Notes
+
+This took longer as initially I went straight to hosting things into GitHub and adding actions to create tags and promote images. Shamefully I've extended the "Do not use any managed/cloud services." to "Do not use any managed/cloud services. But GitHub ones.". In case curious, the workflows are still available in this repo and should be working, although I've stubbed out the deploy jobs in order to not change the repository contents (I was doing circular commits updating the gitops files, just to illustrate, normally I'd host the gitops repo separately).
+
+I've since backtracked on this approach and went finally to a full-local setup. Life's got simpler and more consistent.

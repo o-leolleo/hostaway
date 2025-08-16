@@ -3,6 +3,11 @@ server:
     type: LoadBalancer
     servicePortHttp: 20080
     servicePortHttps: 20443
+  extraArgs:
+    # Avoids security warnings (locally it's fine)
+    - --insecure
+# Regarding listening to a local repository
+# See https://github.com/argoproj/argo-cd/discussions/9912#discussioncomment-13722256
 repoServer:
   volumes:
     - name: local-repo
@@ -24,6 +29,8 @@ config:
       type: git
       name: source
       url: file:///mnt/source
+# Avoiding the ownership error introduced in argocd v2.12
+# See https://github.com/argoproj/argo-cd/issues/19727#issuecomment-2809571263
 extraObjects:
   - apiVersion: v1
     kind: ConfigMap
