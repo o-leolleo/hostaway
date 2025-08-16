@@ -34,7 +34,7 @@ build:
 
 argocd-login:
 	password=$$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode) \
-	&& argocd login localhost:20080 --insecure --username admin --password "$${password}"
+	&& argocd login localhost:20080 --plaintext --username admin --password "$${password}"
 
 deploy: build argocd-login
 	cd gitops/tenants/hostaway/overlays/$(env) \
