@@ -50,7 +50,7 @@ These commits to the right overlays kustomization files can be done in a fashion
 
 A rollback to a previous version is again just a matter of editing the image tag in the kustomization files, via any commit (normally a revert), which can be done via an automated pipelines or just editing the right files and pushing to the remote repository.
 
-I've added some make command to simulate this process, although here I'm not promoting images by relabeling but rather building them:
+I've added a make command to simulate this process, although here I'm not promoting images by relabeling but rather building them:
 
 ```shell
 # this will build a new image and update the stg (staging) kustomization files accordingly
