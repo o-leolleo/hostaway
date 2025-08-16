@@ -12,8 +12,7 @@ init:
 
 build:
 	docker build -t hostaway:$(version) ./apps/hostaway \
-	&& minikube cache add hostaway:$(version) \
-	&& minikube cache reload
+	&& minikube image load hostaway:$(version)
 
 deploy: build
 	cd gitops/tenants/hostaway/overlays/$(env) \
