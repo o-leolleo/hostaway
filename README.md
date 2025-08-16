@@ -66,7 +66,7 @@ The full list of default alerts, installed by the helm chart, is available at ht
 
 - Cluster related
   - KubeApiDown
-    - **Threshold**: 15 minute of downtime.
+    - **Threshold**: 15 minutes of downtime.
     - **Why it’s important**: The API server is a critical component of the Kubernetes control plane. If it's down, the entire cluster is potentially unavailable.
   - KubeProxyDown
     - **Threshold**: 15 minutes of downtime, when all instances have not been able to be reachable by the monitoring system.
