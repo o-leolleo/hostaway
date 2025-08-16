@@ -29,7 +29,6 @@ extraObjects:
     kind: ConfigMap
     metadata:
       name: git-config
-      namespace: argocd
     data:
       gitconfig: |
         [filter "lfs"]

@@ -1,0 +1,45 @@
+prometheus:
+  service:
+    type: LoadBalancer
+    port: 9090
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+defaultRules:
+  rules:
+    alertmanager: false
+    etcd: false
+    configReloaders: false
+    prometheus: false
+    prometheusOperator: false
+    windows: false
+    general: false
+    # Enabled rules
+    kubeControllerManager: true
+    kubernetesSystem: true
+    kubeApiserverAvailability: true
+    kubeApiserverBurnrate: true
+    kubeApiserverHistogram: true
+    kubeApiserverSlos: true
+    k8sContainerCpuUsageSecondsTotal: true
+    k8sContainerMemoryCache: true
+    k8sContainerMemoryRss: true
+    k8sContainerMemorySwap: true
+    k8sContainerResource: true
+    k8sContainerMemoryWorkingSetBytes: true
+    k8sPodOwner: true
+    kubelet: true
+    kubeProxy: true
+    kubePrometheusGeneral: true
+    kubePrometheusNodeRecording: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubeSchedulerAlerting: true
+    kubeSchedulerRecording: true
+    kubeStateMetrics: true
+    network: true
+    node: true
+    nodeExporterAlerting: true
+    nodeExporterRecording: true

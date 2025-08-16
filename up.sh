@@ -21,13 +21,17 @@ main() {
 	terraform apply -auto-approve
     cd -
 
-	password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode)
-    echo "---"
-	echo "ArgoCD is running!"
-    echo "Access http://localhost:20080"
-    echo "Initial admin password: ${password}"
-
     kustomize build gitops/bootstrap/overlays/default | kubectl apply -f -
+
+	password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode)
+    echo -e "\n---"
+	echo -e "All set:\n"
+    echo "Argocd:"
+    echo "  url: http://localhost:20080"
+    echo "  username: admin"
+    echo "  password: ${password}"
+    echo "Prometheus:"
+    echo "  url: http://localhost:9090"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

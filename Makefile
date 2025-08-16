@@ -1,14 +1,16 @@
-.PHONY: setup-repo init build-app clean
+.DEFAULT_GOAL := up
 
+.PHONY: setup-repo up init build-app clean
+
+
+up:
+	./up.sh
 
 init:
-	./init.sh
-
-setup-repo:
 	pre-commit install --hook-type commit-msg
 	pre-commit install
 
-build-app:
+build:
 	docker build -t hostaway ./apps/hostaway
 
 clean:
